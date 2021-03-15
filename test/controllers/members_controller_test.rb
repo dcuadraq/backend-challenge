@@ -7,6 +7,10 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get index' do
     get members_url, as: :json
+    keys = json_body.first.keys
+    assert_includes keys, 'name'
+    assert_includes keys, 'short_url'
+    assert_includes keys, 'number_of_friends'
     assert_response :success
   end
 
@@ -34,6 +38,11 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should show member' do
     get member_url(@member), as: :json
+    assert_equal json_body['name'], 'Matz'
+    assert_equal json_body['url'], 'https://en.wikipedia.org/wiki/Yukihiro_Matsumoto'
+    assert_equal json_body['short_url'], 'bit.ly/3bJulz1'
+    assert_equal json_body['topics'], 'Ruby'
+    assert_equal json_body['friends_links'], ['https://en.wikipedia.org/wiki/David_Heinemeier_Hansson']
     assert_response :success
   end
 

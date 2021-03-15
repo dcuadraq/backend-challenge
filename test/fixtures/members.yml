@@ -5,6 +5,7 @@ one:
   name: Matz
   url: https://en.wikipedia.org/wiki/Yukihiro_Matsumoto
   short_url: bit.ly/3bJulz1
+  topics: Ruby
   friends_ids: [2]
 
 two:

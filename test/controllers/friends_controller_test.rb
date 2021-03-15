@@ -6,6 +6,14 @@ class FriendsControllerTest < ActionDispatch::IntegrationTest
     @member2 = members(:two)
   end
 
+  test 'should get index' do
+    get member_friends_path(@member), as: :json
+    friend = json_body.first
+    assert_equal friend['name'], 'DHH'
+    assert_equal friend['short_url'], 'bit.ly/3bJulz1'
+    assert_response :success
+  end
+
   test 'should add friend to member' do
     @member.update!(friends_ids: [])
     params = { url: @member2.url }

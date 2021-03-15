@@ -5,26 +5,19 @@ class MembersController < ApplicationController
   def index
     @members = Member.all
 
-    render json: @members
+    render json: @members, each_serializer: MemberIndexSerializer
   end
 
   # GET /members/1
   def show
-    render json: @member
+    render json: MemberShowSerializer.new(@member).to_json
   end
 
   # POST /members
   def create
-    @member = Member.new(member_params)
-
-    # TODO: move to job
-    if @member.valid?
-      @member.topics = Scraper.extract_headings(@member.url).join(', ')
-      @member.short_url = UrlShortener.shorten(@member.url)
-    end
-    if @member.save
-      # create short url
-      render json: @member, status: :created, location: @member
+    if create_member
+      serializer = MemberShowSerializer.new(@member)
+      render json: serializer.to_json, status: :created, location: @member
     else
       render json: @member.errors, status: :unprocessable_entity
     end
@@ -52,5 +45,15 @@ class MembersController < ApplicationController
 
   def member_params
     params.require(:member).permit(:name, :url)
+  end
+
+  def create_member
+    @member = Member.new(member_params)
+    return unless @member.valid?
+
+    # TODO: move to job
+    @member.topics = Scraper.extract_headings(@member.url).join(', ')
+    @member.short_url = UrlShortener.shorten(@member.url)
+    @member.save
   end
 end
