@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  name: Matz
+  url: https://en.wikipedia.org/wiki/Yukihiro_Matsumoto
+
+two:
+  id: 2
+  name: DHH
+  url: https://en.wikipedia.org/wiki/David_Heinemeier_Hansson
