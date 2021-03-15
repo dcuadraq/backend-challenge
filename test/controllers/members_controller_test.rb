@@ -25,6 +25,14 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     refute_nil created_member.short_url
   end
 
+  test 'creating member extracts headings from personal website' do
+    url = 'https://en.wikipedia.org/wiki/Yukihiro_Matsumoto'
+    post members_url, params: { member: { name: 'John', url: url } }, as: :json
+    id = json_body['id']
+    created_member = Member.find(id)
+    assert_includes created_member.topics, 'Ruby'
+  end
+
   test 'should show member' do
     get member_url(@member), as: :json
     assert_response :success

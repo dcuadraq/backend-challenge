@@ -8,6 +8,8 @@ class UrlShortener
     client.shorten(long_url: url).link
   end
 
+  private
+
   def client
     @client ||= begin
                   token = Rails.application.credentials.bitly_token

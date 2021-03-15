@@ -18,7 +18,10 @@ class MembersController < ApplicationController
     @member = Member.new(member_params)
 
     # TODO: move to job
-    @member.short_url = UrlShortener.shorten(@member.url)
+    if @member.valid?
+      @member.topics = Scraper.extract_headings(@member.url).join(', ')
+      @member.short_url = UrlShortener.shorten(@member.url)
+    end
     if @member.save
       # create short url
       render json: @member, status: :created, location: @member
