@@ -17,7 +17,10 @@ class MembersController < ApplicationController
   def create
     @member = Member.new(member_params)
 
+    # TODO: move to job
+    @member.short_url = UrlShortener.shorten(@member.url)
     if @member.save
+      # create short url
       render json: @member, status: :created, location: @member
     else
       render json: @member.errors, status: :unprocessable_entity

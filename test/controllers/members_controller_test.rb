@@ -18,6 +18,13 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
+  test 'creating member adds short url' do
+    post members_url, params: { member: { name: @member.name, url: @member.url } }, as: :json
+    id = json_body['id']
+    created_member = Member.find(id)
+    refute_nil created_member.short_url
+  end
+
   test 'should show member' do
     get member_url(@member), as: :json
     assert_response :success
