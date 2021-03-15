@@ -20,16 +20,15 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
 
   test 'creating member adds short url' do
     post members_url, params: { member: { name: @member.name, url: @member.url } }, as: :json
-    id = json_body['id']
-    created_member = Member.find(id)
+    created_member = Member.find_by(url: json_body['url'])
     refute_nil created_member.short_url
   end
 
   test 'creating member extracts headings from personal website' do
+    @member.destroy
     url = 'https://en.wikipedia.org/wiki/Yukihiro_Matsumoto'
     post members_url, params: { member: { name: 'John', url: url } }, as: :json
-    id = json_body['id']
-    created_member = Member.find(id)
+    created_member = Member.find_by(url: json_body['url'])
     assert_includes created_member.topics, 'Ruby'
   end
 

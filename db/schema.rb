@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_022009) do
+ActiveRecord::Schema.define(version: 2021_03_15_031845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2021_03_15_022009) do
     t.text "topics"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "friends_ids", array: true
+    t.index ["friends_ids"], name: "index_members_on_friends_ids", using: :gin
   end
 
 end
