@@ -13,4 +13,12 @@ two:
   name: DHH
   url: https://en.wikipedia.org/wiki/David_Heinemeier_Hansson
   short_url: bit.ly/3bJulz1
-  friends_ids: [1]
+  friends_ids: [1,3]
+
+three:
+  id: 3
+  name: Jose Valim
+  url: https://en.wikipedia.org/wiki/Elixir_(programming_language)
+  short_url: bit.ly/elixir
+  topics: Elixir
+  friends_ids: [2]
